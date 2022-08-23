@@ -47,7 +47,7 @@ int main()
         // typedef unsigned int            __uint32_t;
         socklen_t client_length = sizeof(client_address);
         connectFd = accept(listenFd, (struct sockaddr *)&client_address, &client_length);
-
+        
         if(-1 == connectFd)
         {
             perror("accept");
@@ -189,7 +189,7 @@ int tcp_server_init(char *ip, short port, int backlog, int listenFd)
     };
     */
     // 转化 ip
-    server_address.sin_addr.s_addr  = inet_addr(*ip);
+    server_address.sin_addr.s_addr  = inet_addr(ip);
     /*
     tcpServer.c:198:49: 
     warning: 
