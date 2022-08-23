@@ -21,7 +21,8 @@ int main()
     char ip_test[50] = {"127.0.0.1"};
     short port_test = 6666;
 
-    tcp_server_init(ip_test, port_test, 8, listenFd);
+    // tcp_server_init(ip_test, port_test, 8);
+    listenFd = tcp_server_init(ip_test, port_test, 8);
 
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     //      处理客户端连接请求
@@ -47,7 +48,7 @@ int main()
         // typedef unsigned int            __uint32_t;
         socklen_t client_length = sizeof(client_address);
         connectFd = accept(listenFd, (struct sockaddr *)&client_address, &client_length);
-        
+
         if(-1 == connectFd)
         {
             perror("accept");
@@ -131,8 +132,9 @@ int tcp_communication(int connectFd)
 }
 
 // 把 server 的初始化封装进这个函数
-int tcp_server_init(char *ip, short port, int backlog, int listenFd)
+int tcp_server_init(char *ip, short port, int backlog)
 {
+    int listenFd_init;
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     //         创建套接字
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -141,14 +143,14 @@ int tcp_server_init(char *ip, short port, int backlog, int listenFd)
     // PF_INET          Internet version 4 protocols,
     // SOCK_STREAM      TCP协议 流式套接字
     // 0                0
-    listenFd = socket(PF_INET,SOCK_STREAM,0);
+    listenFd_init = socket(PF_INET,SOCK_STREAM,0);
 
-    if(-1 == listenFd)
+    if(-1 == listenFd_init)
     {
         perror("socket");
         return -1;
     }
-    printf("socket %d is ready\n", listenFd);
+    printf("socket %d is ready\n", listenFd_init);
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     //    填充ip,端口,协议等信息
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -213,7 +215,7 @@ struct sockaddr_in ser_addr =
 
     // Optimize: 设置套接字重用
     int opt = 1; 
-    int m = setsockopt(listenFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    int m = setsockopt(listenFd_init, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
     if(-1 == m)
     {
         perror("setsockopt");
@@ -225,7 +227,7 @@ struct sockaddr_in ser_addr =
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
     // int     bind(int, const struct sockaddr *, socklen_t) __DARWIN_ALIAS(bind);
-    int ret = bind(listenFd, (struct sockaddr*)&server_address, sizeof(server_address));
+    int ret = bind(listenFd_init, (struct sockaddr*)&server_address, sizeof(server_address));
     if(-1 == ret)
     {
         perror("bind");
@@ -238,7 +240,7 @@ struct sockaddr_in ser_addr =
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
     // int     listen(int, int) __DARWIN_ALIAS(listen);
-    ret = listen(listenFd, 8);
+    ret = listen(listenFd_init, 8);
     if(-1 == ret)
     {
         perror("listen");
@@ -246,7 +248,7 @@ struct sockaddr_in ser_addr =
     }
     printf("Waiting for the client to connect...\n"); 
 
-    return listenFd;
+    return listenFd_init;
 }
 
 int tcp_print(char *s)

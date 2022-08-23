@@ -6,7 +6,7 @@
 
 #define SIZE 1024
 
-int tcp_server_init(char *ip,short port, int backlog, int listenFd);
+int tcp_server_init(char *ip,short port, int backlog);
 int tcp_communication(int connectFd);
 int tcp_print(char *s);
 
