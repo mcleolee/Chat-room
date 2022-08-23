@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "ctype.h": "c",
+        "tcp.h": "c",
+        "stdlib.h": "c"
+    }
+}
