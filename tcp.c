@@ -137,7 +137,7 @@ struct sockaddr_in ser_addr =
         // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         //           正常通信
         // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-int tcp_communication(int connectFd)
+int tcp_server_communication(int connectFd)
 {
     while(1)
     {

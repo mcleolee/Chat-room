@@ -14,7 +14,7 @@
 
 int main()
 {
-    // char receiveBuf[SIZE] = {0};    // 接收的字符串 !moved to tcp_communication!
+    // char receiveBuf[SIZE] = {0};    // 接收的字符串 !moved to tcp_server_communication!
     int connectFd;                  // 用于保存 accept 处理后的返回值 作为通信套接字
     int listenFd;                   // 保存 socket 返回值 作为 监听套接字 
 
@@ -64,7 +64,7 @@ int main()
 #endif
         printf("connectFd = %d\n", connectFd);  
 
-        tcp_communication(connectFd);
+        tcp_server_communication(connectFd);
         //          关闭套接字
         close(listenFd);
         return 0;
