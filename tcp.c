@@ -203,12 +203,12 @@ int tcp_print(char *s)
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #if 1
 
-int tcp_client_init()
+int tcp_client_init(char *ip,short port)
 {
 
     //创建通信套结字 ：注意：客户端 没有监听，创建的套结字直接就是通信套结字
 
-    char buf[SIZE] = {0};
+    
     // int     socket(int, int, int);
     // 
     int connectFd = socket(PF_INET, SOCK_STREAM, 0);
@@ -229,11 +229,26 @@ int tcp_client_init()
         // };
     struct sockaddr_in server_address =
     {
-        .sin_family = PF_INET,
-        .sin_addr.s_addr = inet_addr("")
+        .sin_family         = PF_INET,
+        .sin_addr.s_addr    = inet_addr(ip),
+        .sin_port           = htons(port)
+    };
+#else // argv 没传进来，不用这个方法
 
+    struct sockaddr_in serveraddr = {0};
+    serveraddr.sin_family = AF_INET;
+    serveraddr.sin_addr.s_addr = inet_addr(argv[1]);
+    serveraddr.sin_port = htons( atoi(argv[2]) );
+#endif
+    // 连接服务器
+    int len = sizeof(server_address);
+    //主动连接服务器
+    if(-1 == connect(connectFd, (struct sockaddr *)&server_address, len))
+    {
+        perror("connect error\n");
+        return -1;
     }
-
+    return connectFd;
 }
 
 

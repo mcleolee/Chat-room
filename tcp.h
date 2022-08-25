@@ -18,6 +18,6 @@ int tcp_print(char *s);
 //                        CLIENT
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-int tcp_client_init();
+int tcp_client_init(char *ip,short port);
 
 #endif
