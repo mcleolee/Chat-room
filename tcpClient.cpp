@@ -28,19 +28,9 @@ short port_test_client = 6666;
 int connectFd = tcp_client_init(ip_test_client, port_test_client); // 好像没用到backlog，如果后期不用就删掉吧
 
 printf("the connectFd is %d\n",connectFd);
- //通信
-    while(1)
-    {
 
-        fgets(buf,sizeof(buf),stdin);
-    
-        write(connectFd, buf, strlen(buf));
-        //sleep(1);
-        read(connectFd, buf,sizeof(buf));
-        
-        printf("%s\n",buf);
-        // write(STDOUT_FILENO, buf,strlen(buf)); //等同于 printf 输出到屏幕
-    }
+tcp_client_communication(connectFd, buf);
+ 
     //关闭套结字
     close(connectFd);
 

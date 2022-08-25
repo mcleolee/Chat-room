@@ -251,7 +251,21 @@ int tcp_client_init(char *ip,short port)
     return connectFd;
 }
 
-
+int tcp_client_communication(int connectFd, char buf[])
+{
+//通信
+    while(1)
+    {
+        fgets(buf,sizeof(buf),stdin);
+    
+        write(connectFd, buf, strlen(buf));
+        //sleep(1);
+        read(connectFd, buf,sizeof(buf));
+        
+        printf("%s\n",buf);
+        // write(STDOUT_FILENO, buf,strlen(buf)); //等同于 printf 输出到屏幕
+    }
+}
 
 
 

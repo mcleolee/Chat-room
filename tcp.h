@@ -19,5 +19,6 @@ int tcp_print(char *s);
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 int tcp_client_init(char *ip,short port);
+int tcp_client_communication(int connectFd, char buf[]);
 
 #endif
