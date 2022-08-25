@@ -18,4 +18,6 @@ int tcp_print(char *s);
 //                        CLIENT
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
+int tcp_client_init();
+
 #endif

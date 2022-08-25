@@ -203,7 +203,38 @@ int tcp_print(char *s)
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #if 1
 
+int tcp_client_init()
+{
 
+    //创建通信套结字 ：注意：客户端 没有监听，创建的套结字直接就是通信套结字
+
+    char buf[SIZE] = {0};
+    // int     socket(int, int, int);
+    // 
+    int connectFd = socket(PF_INET, SOCK_STREAM, 0);
+    if(-1 == connectFd)
+    {
+        perror("socket error\n");
+        return -1;
+    }
+
+    //以下填充的是 要连接的服务器ip 和端口等信息
+#if 1
+        // struct sockaddr_in {
+        // 	__uint8_t       sin_len;
+        // 	sa_family_t     sin_family;
+        // 	in_port_t       sin_port;
+        // 	struct  in_addr sin_addr;
+        // 	char            sin_zero[8];
+        // };
+    struct sockaddr_in server_address =
+    {
+        .sin_family = PF_INET,
+        .sin_addr.s_addr = inet_addr("")
+
+    }
+
+}
 
 
 
