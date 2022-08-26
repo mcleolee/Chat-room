@@ -12,7 +12,7 @@
 
 int tcp_server_init(char *ip,short port, int backlog);
 int tcp_server_communication(int connectFd);
-int tcp_print(char *s);
+int print(char *s);
 
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 //                        CLIENT

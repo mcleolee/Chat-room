@@ -165,13 +165,14 @@ int tcp_server_communication(int connectFd)
         //            正常通信
         // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
+        // print("this is the start of communication\n");
 
-        sign_in();
+        sign_in(receiveBuf);
         
         printf("receive:%s\n", receiveBuf);
 
 
-        
+
 
         if (strncmp(receiveBuf, "sl", 2) == 0)
         {
@@ -179,7 +180,7 @@ int tcp_server_communication(int connectFd)
         }
         else if (strncmp(receiveBuf, "wtf", 3) == 0)
         {
-            tcp_print("wtf???\n");
+            print("wtf???\n");
         }
 
         // 将接收到的数据转换成大写
@@ -194,13 +195,14 @@ int tcp_server_communication(int connectFd)
     return 0;
 }
 
-int sign_in()
+int sign_in(char *receiveBuf)
 {
-
+    // print("FUNCTION sign_in IS WORKING\n");
+    
 }
 
 
-int tcp_print(char *s)
+int print(char *s)
 {
     printf("%s",s);
     return 0;

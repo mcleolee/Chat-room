@@ -256,7 +256,7 @@ int tcp_server_communication(int connectFd)
         }
         else if(strncmp(receiveBuf, "wtf", 3) == 0)
         {
-            tcp_print("wtf???\n");
+            print("wtf???\n");
         }
         
         // 将接收到的数据转换成大写
@@ -273,7 +273,7 @@ int tcp_server_communication(int connectFd)
 }
 
 
-int tcp_print(char *s)
+int print(char *s)
 {
     printf("%s",s);
     return 0;

@@ -12,9 +12,9 @@
 
 int tcp_server_init(char *ip, short port, int backlog);
 int tcp_server_communication(int connectFd);
-int tcp_print(char *s);
+int print(char *s);
 
-int sign_in();
+int sign_in(char *receiveBuf);
 
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 //                        CLIENT
