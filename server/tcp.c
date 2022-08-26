@@ -198,6 +198,11 @@ int tcp_print(char *s)
 #endif
 
 
+
+
+// server 用不到 client 的函数，很合理吧
+#if 0
+
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 //                        CLIENT
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -269,7 +274,7 @@ int tcp_client_communication(int connectFd, char buf[])
 }
 
 
-
+#endif 
 
 
 #endif

@@ -11,6 +11,89 @@
 #include "tcp.h"
 
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//                        CLIENT
+// -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+#if 1
+
+int tcp_client_init(char *ip,short port)
+{
+
+    //创建通信套结字 ：注意：客户端 没有监听，创建的套结字直接就是通信套结字
+
+    
+    // int     socket(int, int, int);
+    // 
+    int connectFd = socket(PF_INET, SOCK_STREAM, 0);
+    if(-1 == connectFd)
+    {
+        perror("socket error\n");
+        return -1;
+    }
+
+    //以下填充的是 要连接的服务器ip 和端口等信息
+#if 1
+        // struct sockaddr_in {
+        // 	__uint8_t       sin_len;
+        // 	sa_family_t     sin_family;
+        // 	in_port_t       sin_port;
+        // 	struct  in_addr sin_addr;
+        // 	char            sin_zero[8];
+        // };
+    struct sockaddr_in server_address =
+    {
+        .sin_family         = PF_INET,
+        .sin_addr.s_addr    = inet_addr(ip),
+        .sin_port           = htons(port)
+    };
+#else // argv 没传进来，不用这个方法
+
+    struct sockaddr_in serveraddr = {0};
+    serveraddr.sin_family = AF_INET;
+    serveraddr.sin_addr.s_addr = inet_addr(argv[1]);
+    serveraddr.sin_port = htons( atoi(argv[2]) );
+#endif
+    // 连接服务器
+    int len = sizeof(server_address);
+    //主动连接服务器
+    if(-1 == connect(connectFd, (struct sockaddr *)&server_address, len))
+    {
+        perror("connect error\n");
+        return -1;
+    }
+    return connectFd;
+}
+
+int tcp_client_communication(int connectFd, char buf[])
+{
+//通信
+    while(1)
+    {
+        int sizeof_buf = sizeof(buf);
+        fgets(buf,sizeof_buf,stdin);
+    
+        write(connectFd, buf, strlen(buf));
+        //sleep(1);
+        read(connectFd, buf,sizeof_buf);
+        
+        printf("%s\n",buf);
+        // write(STDOUT_FILENO, buf,strlen(buf)); //等同于 printf 输出到屏幕
+    }
+}
+
+
+
+
+
+#endif
+
+
+
+
+
+
+// client 用不到 server 的函数，很合理吧
+#if 0
+// -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 //                        SERVER
 // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #if 1
@@ -196,80 +279,5 @@ int tcp_print(char *s)
 }
 
 #endif
-
-
-// -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-//                        CLIENT
-// -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-#if 1
-
-int tcp_client_init(char *ip,short port)
-{
-
-    //创建通信套结字 ：注意：客户端 没有监听，创建的套结字直接就是通信套结字
-
-    
-    // int     socket(int, int, int);
-    // 
-    int connectFd = socket(PF_INET, SOCK_STREAM, 0);
-    if(-1 == connectFd)
-    {
-        perror("socket error\n");
-        return -1;
-    }
-
-    //以下填充的是 要连接的服务器ip 和端口等信息
-#if 1
-        // struct sockaddr_in {
-        // 	__uint8_t       sin_len;
-        // 	sa_family_t     sin_family;
-        // 	in_port_t       sin_port;
-        // 	struct  in_addr sin_addr;
-        // 	char            sin_zero[8];
-        // };
-    struct sockaddr_in server_address =
-    {
-        .sin_family         = PF_INET,
-        .sin_addr.s_addr    = inet_addr(ip),
-        .sin_port           = htons(port)
-    };
-#else // argv 没传进来，不用这个方法
-
-    struct sockaddr_in serveraddr = {0};
-    serveraddr.sin_family = AF_INET;
-    serveraddr.sin_addr.s_addr = inet_addr(argv[1]);
-    serveraddr.sin_port = htons( atoi(argv[2]) );
-#endif
-    // 连接服务器
-    int len = sizeof(server_address);
-    //主动连接服务器
-    if(-1 == connect(connectFd, (struct sockaddr *)&server_address, len))
-    {
-        perror("connect error\n");
-        return -1;
-    }
-    return connectFd;
-}
-
-int tcp_client_communication(int connectFd, char buf[])
-{
-//通信
-    while(1)
-    {
-        int sizeof_buf = sizeof(buf);
-        fgets(buf,sizeof_buf,stdin);
-    
-        write(connectFd, buf, strlen(buf));
-        //sleep(1);
-        read(connectFd, buf,sizeof_buf);
-        
-        printf("%s\n",buf);
-        // write(STDOUT_FILENO, buf,strlen(buf)); //等同于 printf 输出到屏幕
-    }
-}
-
-
-
-
 
 #endif
