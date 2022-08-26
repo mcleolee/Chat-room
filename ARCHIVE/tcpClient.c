@@ -20,27 +20,19 @@ int main(int argc, char **argv)
     }
 #endif
 
-char buf[SIZE] = {0};
+    char buf[SIZE] = {0};
 
-char ip_test_client[50] = "127.0.0.1";
-short port_test_client = 6666;
+    char ip_test_client[50] = "127.0.0.1";
+    short port_test_client = 6666;
 
-int connectFd = tcp_client_init(ip_test_client, port_test_client); // 好像没用到backlog，如果后期不用就删掉吧
+    int connectFd = tcp_client_init(ip_test_client, port_test_client); // 好像没用到backlog，如果后期不用就删掉吧
 
-printf("the connectFd is %d\n",connectFd);
+    printf("the connectFd is %d\n", connectFd);
 
-tcp_client_communication(connectFd, buf);
- 
+    // int sizeof_buf = sizeof(buf);
+
+    tcp_client_communication(connectFd, buf);
+
     //关闭套结字
     close(connectFd);
-
-
-
-
-
-
-
-
-
-
 }

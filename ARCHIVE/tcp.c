@@ -256,11 +256,12 @@ int tcp_client_communication(int connectFd, char buf[])
 //通信
     while(1)
     {
-        fgets(buf,sizeof(buf),stdin);
+        int sizeof_buf = sizeof(buf);
+        fgets(buf,sizeof_buf,stdin);
     
         write(connectFd, buf, strlen(buf));
         //sleep(1);
-        read(connectFd, buf,sizeof(buf));
+        read(connectFd, buf,sizeof_buf);
         
         printf("%s\n",buf);
         // write(STDOUT_FILENO, buf,strlen(buf)); //等同于 printf 输出到屏幕
