@@ -77,6 +77,7 @@ int tcp_client_communication(int connectFd, char buf[])
         
         printf("%s\n",buf);
         // write(STDOUT_FILENO, buf,strlen(buf)); //等同于 printf 输出到屏幕
+        
     }
 }
 

@@ -164,28 +164,39 @@ int tcp_server_communication(int connectFd)
         // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
         //            正常通信
         // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+        sign_in();
+        
         printf("receive:%s\n", receiveBuf);
 
-        if(strncmp(receiveBuf, "sl", 2) == 0)
+
+        
+
+        if (strncmp(receiveBuf, "sl", 2) == 0)
         {
             system("sl");
         }
-        else if(strncmp(receiveBuf, "wtf", 3) == 0)
+        else if (strncmp(receiveBuf, "wtf", 3) == 0)
         {
             tcp_print("wtf???\n");
         }
-        
-        // 将接收到的数据转换成大写
-            for(int i=0;i<count; i++)
-            {
-                // 将 recvbuf 里面的字母逐个变为大写再送回 recvbuf
-                receiveBuf[i] = toupper(receiveBuf[i]);
-            }
-            write(connectFd, receiveBuf, count);
 
+        // 将接收到的数据转换成大写
+        for (int i = 0; i < count; i++)
+        {
+            // 将 recvbuf 里面的字母逐个变为大写再送回 recvbuf
+            receiveBuf[i] = toupper(receiveBuf[i]);
+        }
+        write(connectFd, receiveBuf, count);
     }
     close(connectFd);
     return 0;
+}
+
+int sign_in()
+{
+
 }
 
 

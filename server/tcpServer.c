@@ -48,17 +48,16 @@ int main()
         // typedef unsigned int            __uint32_t;
         socklen_t client_length = sizeof(client_address);
         connectFd = accept(listenFd, (struct sockaddr *)&client_address, &client_length);
-
         if(-1 == connectFd)
         {
             perror("accept");
             return -1;
         }
+        
         // char		*inet_ntoa(struct in_addr);
         // #define ntohs(x)        __DARWIN_OSSwapInt16(x)
             // #define __DARWIN_OSSwapInt16(x) \
     ((__uint16_t)(__builtin_constant_p(x) ? __DARWIN_OSSwapConstInt16(x) : _OSSwapInt16(x)))
-
         printf("客户端(%s:%d)链接成功！\n",inet_ntoa(client_address.sin_addr/*这有问题？*/),ntohs(client_address.sin_port));
         
 #endif
