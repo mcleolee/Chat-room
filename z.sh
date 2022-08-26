@@ -1,1 +1,1 @@
-gcc *.c -o q
+gcc *.c -o q #-std=c11
