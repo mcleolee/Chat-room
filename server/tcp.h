@@ -23,4 +23,5 @@ int sign_in(char *receiveBuf);
 int tcp_client_init(char *ip, short port);
 int tcp_client_communication(int connectFd, char buf[]);
 
+
 #endif
